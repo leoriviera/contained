@@ -2,11 +2,6 @@ name: Publish SSH Container
 
 on:
   workflow_dispatch:
-    inputs:
-      platform:
-        description: Target platform for Docker image
-        required: true
-        default: linux/amd64
 
 env:
   REGISTRY: ghcr.io
@@ -17,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      IMAGE_NAME: leoriviera/contained-ssh
+      IMAGE_NAME: ${{ github.repository_owner }}/contained-ssh
 
     permissions:
       contents: read
@@ -39,6 +34,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
