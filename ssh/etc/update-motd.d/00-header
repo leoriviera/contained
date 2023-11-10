@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Running code to fetch the blog content in profile.d doesn't work, as
+# update-motd.d runs first. So, we'll just fetch the blog content here.
+# to make sure the latest post is always displayed.
+
+curl -s -L -o /home/user/blog.zip "https://github.com/leoriviera/blog/archive/main.zip"
+unzip -q /home/user/blog.zip -d /home/user
+mv /home/user/blog-main /home/user/blog
+rm /home/user/blog.zip
+
+printf "Welcome to my Terminal blog. I'm still thinking of a catchy name for it.\n"
+# printf "If you've never used the terminal before, you can get started with [cat ~/help.md].\n"
+printf "(You can click on any commands in square brackets, by the way, to run them automatically!)\n"
+printf "\n"
+printf "Check out the latest post at [cat ~/blog/$(ls -t /home/user/blog | head -1)]!\n"
+printf "\n"
+printf "Interested in hiring me? Check out my CV with [cat cv/README.md].\n"
