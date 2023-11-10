@@ -15,4 +15,4 @@ printf "(You can click on any commands in square brackets, by the way, to run th
 printf "\n"
 printf "Check out the latest post at [cat ~/blog/$(ls -t /home/user/blog | head -1)]!\n"
 printf "\n"
-printf "Interested in hiring me? Check out my CV with [cat cv/README.md].\n"
+printf "Interested in hiring me? Check out my CV with [cat ~/cv/README.md].\n"
