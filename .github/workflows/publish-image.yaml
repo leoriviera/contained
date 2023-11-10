@@ -1,5 +1,3 @@
-name: Publish SSH Container
-
 on:
   workflow_call:
     inputs:

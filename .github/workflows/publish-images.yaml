@@ -1,18 +1,25 @@
-name: Publish SSH Container
+name: Publish container images
 
 on:
   workflow_dispatch:
 
-env:
-  REGISTRY: ghcr.io
-
 jobs:
-  publish-ssh:
+  build-and-push-ssh:
     name: Build SSH image
     uses: ./.github/workflows/publish-image.yaml
     with:
-      image_name: ssh-container
+      image_name: contained-ssh
       docker_context: ./ssh
+    secrets: inherit
+    permissions:
+      contents: read
+      packages: write
+  build-and-push-server:
+    name: Build server image
+    uses: ./.github/workflows/publish-image.yaml
+    with:
+      image_name: contained-server
+      docker_context: ./server
     secrets: inherit
     permissions:
       contents: read
