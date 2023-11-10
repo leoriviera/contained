@@ -21,10 +21,6 @@ jobs:
     env:
       IMAGE_NAME: ${{ github.repository_owner }}/${{ inputs.image_name }}
 
-    permissions:
-      contents: read
-      packages: write
-
     steps:
       - name: Check out repository
         uses: actions/checkout@v4

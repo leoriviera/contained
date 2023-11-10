@@ -14,3 +14,6 @@ jobs:
       image_name: ssh-container
       docker_context: ./ssh
     secrets: inherit
+    permissions:
+      contents: read
+      packages: write
