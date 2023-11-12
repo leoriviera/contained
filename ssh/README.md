@@ -2,6 +2,8 @@
 
 This Docker container allows users to view and interact with my blog. It is a simple container that exposes SSH on port 22, so a server can forward a user to it.
 
+This image is built for `linux/arm64`.
+
 This container includes the [Starship shell](https://starship.rs).
 
 Files in `etc/` are copy-merged into `etc` on the host device. Files in `home/` are copied into the user's home directory.
