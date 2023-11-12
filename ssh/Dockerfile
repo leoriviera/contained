@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 # Ignore Watchtower updates
-LABEL com.centurylinklabs.watchtower.enable="true"
+LABEL com.centurylinklabs.watchtower.enable="false"
 
 # Install packages
 RUN apt update && apt install openssh-server sudo curl unzip sl rsync -y
