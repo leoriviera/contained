@@ -9,7 +9,7 @@ jobs:
     uses: ./.github/workflows/publish-image.yaml
     with:
       image_name: contained-ssh
-      docker_context: ./ssh
+      docker_context: ./packages/ssh
     secrets: inherit
     permissions:
       contents: read
@@ -19,7 +19,7 @@ jobs:
     uses: ./.github/workflows/publish-image.yaml
     with:
       image_name: contained-server
-      docker_context: ./server
+      docker_context: ./packages/server
     secrets: inherit
     permissions:
       contents: read
