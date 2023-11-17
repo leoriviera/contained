@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+      - name: Change to packages directory
+        run: cd packages
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -26,13 +28,12 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
-      - name: Change to packages directory
-        run: cd packages
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Build frontend
         run: cd frontend && yarn build
         env:
+          REACT_APP_FRONTEND_DOMAIN: ${{ vars.REACT_APP_FRONTEND_DOMAIN }}
           REACT_APP_SERVER_DOMAIN: ${{ vars.REACT_APP_SERVER_DOMAIN }}
       - name: Upload to S3 buclet
         run: aws s3 sync build s3://$(S3_BUCKET_NAME)/build --delete
