@@ -1,0 +1,40 @@
+# 1. Build frontend
+# 2. Upload frontend to AWS S3
+
+name: Publish frontend
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy-frontend:
+    name: Build and deploy frontend
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "yarn"
+      - name: Setup AWS CLI
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: Change to packages directory
+        run: cd packages
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Build frontend
+        run: cd frontend && yarn build
+        env:
+          REACT_APP_SERVER_DOMAIN: ${{ vars.REACT_APP_SERVER_DOMAIN }}
+      - name: Upload to S3 buclet
+        run: aws s3 sync build s3://$(S3_BUCKET_NAME)/build --delete
+        env:
+          S3_BUCKET_NAME: ${{ vars.AWS_S3_BUCKET }}
