@@ -1,10 +1,13 @@
 FROM ubuntu:latest
 
+ARG BLOG_GITHUB_REPO=https://github.com/leoriviera/blog
+ENV BLOG_GITHUB_REPO=$BLOG_GITHUB_REPO
+
 # Ignore Watchtower updates
 LABEL com.centurylinklabs.watchtower.enable="false"
 
 # Install packages
-RUN apt update && apt install openssh-server sudo curl unzip sl rsync -y
+RUN apt update && apt install openssh-server sudo curl unzip sl rsync neofetch -y
 
 # Create a user "sshuser" and group "sshgroup"
 RUN groupadd usergroup && useradd -ms /bin/bash -g usergroup user
@@ -38,4 +41,4 @@ RUN service ssh start
 # Expose docker port 22
 EXPOSE 22
 
-CMD ["timeout", "3600", "/usr/sbin/sshd", "-D"]
+CMD timeout 3600 /usr/sbin/sshd -o "SetEnv=BLOG_GITHUB_REPO=$BLOG_GITHUB_REPO" -D
