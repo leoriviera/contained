@@ -1,0 +1,35 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "A server that runs Docker containers, and exposes SSH connections via WebSockets.",
+  "main": "build/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "build": "tsc",
+    "dev:build": "docker build -t contained-server:dev -f Dockerfile.dev .",
+    "dev:start": "docker run -v $(realpath $pwd ./node_modules):/usr/src/app/node_modules -v $(pwd):/usr/src/app -v /var/run/docker.sock:/var/run/docker.sock -d -p 3000:3000 contained-server:dev",
+    "prod:build": "docker build --platform linux/amd64 -t ghcr.io/leoriviera/contained-server:latest .",
+    "prod:push": "docker push ghcr.io/leoriviera/contained-server:latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leoriviera/contained.git"
+  },
+  "author": "Leo Riviera",
+  "license": "MIT",
+  "homepage": "https://github.com/leoriviera/contained",
+  "dependencies": {
+    "@types/node": "^20.8.9",
+    "@types/ssh2": "^1.11.15",
+    "@types/utf8": "^3.0.2",
+    "fastify": "^4.24.3",
+    "fastify-socket.io": "^5.0.0",
+    "socket.io": "^4.7.2",
+    "ssh2": "^0.8.2",
+    "typescript": "^5.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1"
+  }
+}
