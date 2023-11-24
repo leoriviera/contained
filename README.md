@@ -22,7 +22,7 @@ A blog made of containers!
 
 Below is an architecture diagram of the infrastructure that this project deploys. The VPC, internet gateway, subnets and security groups have been omitted from the diagram for the sake of clarity.
 
-![Architecture diagram](https://github.com/leoriviera/contained/blob/26726c04fd069ff7e083b66ddd624047b0ec9503/contained.svg)
+![Architecture diagram](https://github.com/leoriviera/contained/blob/f9e551e87bcddc3b4c7ea0cdaa49a317f87f5bed/contained.svg)
 
 The various components include
 
