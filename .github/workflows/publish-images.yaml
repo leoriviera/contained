@@ -2,6 +2,15 @@ name: Publish container images
 
 on:
   workflow_dispatch:
+    inputs:
+      SSH_IMAGE:
+        description: The location of the SSH image to use
+        required: true
+        default: ghcr.io/leoriviera/contained-ssh:latest
+      BLOG_GITHUB_REPO:
+        description: The GitHub repository to use for the blog
+        required: true
+        default: https://github.com/leoriviera/blog
 
 jobs:
   build-and-push-ssh:
@@ -10,6 +19,8 @@ jobs:
     with:
       image_name: contained-ssh
       docker_context: ./packages/ssh
+      build-args: |
+        BLOG_GITHUB_REPO=${{ inputs.BLOG_GITHUB_REPO }}
     secrets: inherit
     permissions:
       contents: read
@@ -20,6 +31,8 @@ jobs:
     with:
       image_name: contained-server
       docker_context: ./packages/server
+      build-args: |
+        SSH_IMAGE=${{ inputs.SSH_IMAGE }}
     secrets: inherit
     permissions:
       contents: read

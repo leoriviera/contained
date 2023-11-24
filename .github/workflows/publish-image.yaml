@@ -7,6 +7,9 @@ on:
       docker_context:
         required: true
         type: string
+      build-args:
+        required: false
+        type: string
 
 env:
   REGISTRY: ghcr.io
@@ -46,3 +49,4 @@ jobs:
           platforms: linux/amd64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: ${{ inputs.build-args }}
