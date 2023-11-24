@@ -2,6 +2,8 @@
 
 A blog made of containers!
 
+![Screenshot of contained](https://github.com/leoriviera/contained/blob/26726c04fd069ff7e083b66ddd624047b0ec9503/blog.png)
+
 ## Prerequisites
 
 - An already-configured hosted zone for your domain of choice on Route 53
@@ -9,14 +11,18 @@ A blog made of containers!
 - An authenticated AWS CLI, which Terraform uses to deploy infrastructure
 - An authenticate GitHub CLI, which Terraform uses to deploy infrastructure
 
+## Getting Started
+
 1. Run the `publish-images` GitHub Action, to push `contained` images to GHCR
-2. Set up infrastructure with Terraform
+2. Locally set up infrastructure with Terraform, using `terraform apply`
 3. Run the `publish-frontend` GitHub Action
 4. Visit your site, and enjoy!
 
 ## Architecture Overview
 
 Below is an architecture diagram of the infrastructure that this project deploys. The VPC, internet gateway, subnets and security groups have been omitted from the diagram for the sake of clarity.
+
+![Architecture diagram](https://github.com/leoriviera/contained/blob/26726c04fd069ff7e083b66ddd624047b0ec9503/contained.svg)
 
 The various components include
 
