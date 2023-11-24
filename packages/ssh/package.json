@@ -1,5 +1,5 @@
 {
-  "name": "contained-ssh",
+  "name": "ssh",
   "version": "1.0.0",
   "description": "A simple SSH server that runs in a container",
   "scripts": {

@@ -1,4 +1,4 @@
-# `contained` child container
+# `contained` child SSH container
 
 This is the child container for `contained`, the blog that's made of containers! This image is built for `linux/arm64`.
 
@@ -16,7 +16,7 @@ When this container fires up, it downloads the content of my blog (at [https://g
 
 These are normally provided by the GitHub Actions workflow which builds and deploys the frontend.
 
-## Commands
+## Contributing
 
 You're able to run this project using scripts in `package.json`.
 
