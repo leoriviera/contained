@@ -13,4 +13,6 @@ These are normally provided by the GitHub Actions workflow which builds and depl
 
 ## Contributing
 
-To run locally, install the dependencies at the monorepo level, and then run `yarn start` in this directory.
+Install dependencies using `yarn`.
+
+Run `yarn start` in this directory.
