@@ -28,7 +28,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
       - name: Install dependencies
-        working-directory: packages/
+        working-directory: packages/frontend/
         run: yarn install --frozen-lockfile
       - name: Build frontend
         working-directory: packages/frontend/
