@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 18
           cache: "yarn"
-          cache-dependency-path: "packages/yarn.lock"
+          cache-dependency-path: "packages/frontend/yarn.lock"
       - name: Setup AWS CLI
         uses: aws-actions/configure-aws-credentials@v4
         with:
