@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
+    platform: linux/amd64
+  server:
+    image: ghcr.io/leoriviera/contained-server:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    platform: linux/amd64

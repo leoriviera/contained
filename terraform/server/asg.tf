@@ -32,7 +32,12 @@ resource "aws_launch_template" "launch_template" {
   image_id               = tolist(data.aws_ami_ids.amazon_linux.ids)[0]
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.scaling_group_sg.id]
-  user_data              = filebase64("${path.module}/user-data.sh")
+  user_data              = base64encode(templatefile("${path.module}/user-data.sh", {
+    bucket_name = var.s3_bucket_name
+  }))
+  iam_instance_profile {
+    arn = var.instance_profile_arn
+  }
   update_default_version = true
   block_device_mappings {
     device_name = "/dev/xvda"

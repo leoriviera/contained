@@ -7,5 +7,5 @@ output "server_subdomain" {
 }
 
 output "s3_bucket_name" {
-  value = module.frontend.s3_bucket_name
+  value = module.infrastructure.s3_bucket_name
 }

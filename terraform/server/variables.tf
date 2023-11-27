@@ -1,21 +1,3 @@
-# Find public subnets in the default VPC
-# data "aws_subnets" "subnets" {
-#   filter {
-#     name   = "vpc-id"
-#     values = [var.vpc_id]
-#   }
-
-#   filter {
-#     name = "map-public-ip-on-launch"
-#     values = [true]
-#   }
-# }
-
-# data "aws_subnet" "available" {
-#   for_each = toset(data.aws_subnets.subnets.ids)
-#   id       = each.key
-# }
-
 data "aws_ami_ids" "amazon_linux" {
   owners = ["amazon"]
 
@@ -61,5 +43,15 @@ variable "vpc_id" {
 
 variable "vpc_subnets" {
   type = list(string)
+  nullable = false
+}
+
+variable "s3_bucket_name" {
+  type = string
+  nullable = false
+}
+
+variable "instance_profile_arn" {
+  type = string
   nullable = false
 }

@@ -7,7 +7,7 @@
     "dev": "nodemon src/index.ts",
     "build": "tsc",
     "dev:build": "docker build -t contained-server:dev -f Dockerfile.dev .",
-    "dev:start": "docker run -v $(realpath $pwd ./node_modules):/usr/src/app/node_modules -v $(pwd):/usr/src/app -v /var/run/docker.sock:/var/run/docker.sock -d -p 3000:3000 contained-server:dev",
+    "dev:start": "docker run -v $(realpath $pwd ./node_modules):/usr/src/app/node_modules -v $(pwd):/usr/src/app -v /var/run/docker.sock:/var/run/docker.sock -p 3000:3000 contained-server:dev",
     "prod:build": "docker build --platform linux/amd64 -t ghcr.io/leoriviera/contained-server:latest .",
     "prod:push": "docker push ghcr.io/leoriviera/contained-server:latest"
   },

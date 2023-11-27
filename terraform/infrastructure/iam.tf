@@ -15,17 +15,16 @@ resource "aws_iam_policy" "s3_access_policy" {
         Action = [
           "s3:GetObject",
           "s3:DeleteObject",
-          "s3:PutObject",
-          "s3:ListBucket"
+          "s3:PutObject"
         ]
-        Resource = "arn:aws:s3:::${var.s3_bucket_name}/*"
+        Resource = "${aws_s3_bucket.bucket.arn}/*"
       }
     ]
   })
 }
 
 # Attach IAM policy to user
-resource "aws_iam_user_policy_attachment" "test-attach" {
+resource "aws_iam_user_policy_attachment" "s3_user_access" {
   user       = aws_iam_user.gh_action.name
   policy_arn = aws_iam_policy.s3_access_policy.arn
 }
@@ -33,4 +32,28 @@ resource "aws_iam_user_policy_attachment" "test-attach" {
 # Generate access key
 resource "aws_iam_access_key" "gh_action" {
   user = aws_iam_user.gh_action.name
+}
+
+data aws_iam_policy_document "ec2_assume_role" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role" "ec2_iam_role" {
+  assume_role_policy = data.aws_iam_policy_document.ec2_assume_role.json
+}
+
+resource "aws_iam_role_policy_attachment" "s3_user_access" {
+  role = aws_iam_role.ec2_iam_role.name
+  policy_arn = aws_iam_policy.s3_access_policy.arn
+}
+
+resource "aws_iam_instance_profile" "instance_profile" {
+  role = aws_iam_role.ec2_iam_role.name
 }

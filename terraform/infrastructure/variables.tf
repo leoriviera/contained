@@ -1,5 +1,9 @@
 data "aws_availability_zones" "all" {}
 
+data "aws_cloudfront_cache_policy" "caching_policy" {
+  name = "Managed-CachingOptimized"
+}
+
 data "aws_ec2_instance_type_offerings" "available" {
   for_each = toset(data.aws_availability_zones.all.names)
 
@@ -17,13 +21,13 @@ data "aws_ec2_instance_type_offerings" "available" {
   location_type = "availability-zone"
 }
 
+data "github_repository" "repo" {
+  full_name = var.repository
+}
+
 data "aws_route53_zone" "hosted_zone" {
   name         = "${var.domain}."
   private_zone = false
-}
-
-data "github_repository" "repo" {
-  full_name = var.repository
 }
 
 # Finding AZs which support particular instances
@@ -51,11 +55,6 @@ variable "frontend_domain" {
 }
 
 variable "server_domain" {
-  type     = string
-  nullable = false
-}
-
-variable "s3_bucket_name" {
   type     = string
   nullable = false
 }

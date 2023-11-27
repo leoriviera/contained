@@ -7,7 +7,7 @@ ENV BLOG_GITHUB_REPO=$BLOG_GITHUB_REPO
 LABEL com.centurylinklabs.watchtower.enable="false"
 
 # Install packages
-RUN apt update && apt install openssh-server sudo curl unzip sl rsync neofetch -y
+RUN apt update && apt install openssh-server sudo curl unzip sl rsync neofetch moreutils gettext-base -y
 
 # Create a user "sshuser" and group "sshgroup"
 RUN groupadd usergroup && useradd -ms /bin/bash -g usergroup user
@@ -25,6 +25,9 @@ RUN echo 'eval "$(starship init bash)"' >> /home/user/.bashrc
 
 COPY --chown=root etc /tmp-etc
 RUN chmod 755 -R /tmp-etc/*
+# As env vars aren't available in update-motd.d, replace env vars in etc/ files with envsubst
+# Requires sponge from moreutils (see https://stackoverflow.com/a/74551579)
+RUN find /tmp-etc -type f -exec sh -c "cat {} | envsubst | sponge {}" \;
 
 # Remove existing message of the day
 RUN rm /etc/update-motd.d/*
@@ -41,4 +44,4 @@ RUN service ssh start
 # Expose docker port 22
 EXPOSE 22
 
-CMD timeout 3600 /usr/sbin/sshd -o "SetEnv=BLOG_GITHUB_REPO=$BLOG_GITHUB_REPO" -D
+CMD timeout 3600 /usr/sbin/sshd -D

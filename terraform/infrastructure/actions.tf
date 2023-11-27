@@ -21,7 +21,7 @@ resource "github_actions_environment_variable" "aws_s3_bucket_name" {
   environment   = github_repository_environment.repo_env.environment
   repository    = data.github_repository.repo.name
   variable_name = "AWS_S3_BUCKET_NAME"
-  value         = var.s3_bucket_name
+  value         = aws_s3_bucket.bucket.bucket
 }
 
 resource "github_actions_environment_variable" "aws_region" {

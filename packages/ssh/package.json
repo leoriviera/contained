@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A simple SSH server that runs in a container",
   "scripts": {
-    "dev:build": "docker build -t contained-ssh:dev .",
+    "dev:build": "docker build -t contained-ssh:dev . &> build.log",
     "prod:build": "docker build --platform linux/amd64 -t ghcr.io/leoriviera/contained-ssh:latest .",
     "prod:push": "docker push ghcr.io/leoriviera/contained-ssh:latest"
   }

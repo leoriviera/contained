@@ -21,7 +21,7 @@ resource "aws_cloudfront_distribution" "cloudfront" {
     origin_access_control_id = aws_cloudfront_origin_access_control.s3_access.id
   }
 
-  aliases = [var.domain]
+  aliases = [var.frontend_domain]
 
   default_cache_behavior {
     compress               = true
@@ -42,7 +42,7 @@ resource "aws_cloudfront_distribution" "cloudfront" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = var.certificate_arn
+    acm_certificate_arn = aws_acm_certificate_validation.certificate.certificate_arn
     ssl_support_method  = "sni-only"
   }
 
@@ -51,8 +51,8 @@ resource "aws_cloudfront_distribution" "cloudfront" {
 
 # Create a record to point the front-end subdomain at the CloudFront distribution
 resource "aws_route53_record" "frontend" {
-  zone_id = var.hosted_zone_id
-  name    = "${var.domain}."
+  zone_id = data.aws_route53_zone.hosted_zone.zone_id
+  name    = "${var.frontend_domain}."
   type    = "A"
 
   alias {
